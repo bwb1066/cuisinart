@@ -127,6 +127,20 @@
   --color-ink: #1a1816;
   --color-stone: #766d62;
   --color-sale: #c83101;
+  --color-brand-dark: var(--color-cuisinart-green);
+
+  /* aliases used by the commerce blocks (product-cards, product-detail,
+     quote-cart, persona-products) */
+  --cta-color: var(--color-cuisinart-yellow);
+  --cta-color-hover: var(--color-cuisinart-yellow-hover);
+  --cta-ink: var(--color-cuisinart-green);
+  --dark-color: var(--color-cuisinart-green);
+  --light-color: var(--color-cream);
+  --link-color: var(--color-cuisinart-green);
+  --text-color: var(--color-ink);
+  --background-color: var(--color-light);
+  --rounded-sm: var(--radius);
+  --pill-radius: 999px;
 
   /* fonts */
   --font-family: "Work Sans", "Work Sans Fallback", arial, sans-serif;

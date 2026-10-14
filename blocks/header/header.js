@@ -1,5 +1,7 @@
-import { getConfig, getMetadata } from '../../scripts/ak.js';
+import { getConfig, getMetadata, loadBlock } from '../../scripts/ak.js';
 import { loadFragment } from '../fragment/fragment.js';
+import store from '../../scripts/commerce.js';
+import { SPARKLE_SVG } from '../../scripts/sparkle-icon.js';
 
 const { locale } = getConfig();
 
@@ -135,15 +137,65 @@ function buildSearch() {
   const form = document.createElement('form');
   form.className = 'header-search';
   form.setAttribute('role', 'search');
-  form.innerHTML = '<label><span class="a11y">Search</span><input type="search" name="q" placeholder="Search" autocomplete="off"></label>';
+  form.innerHTML = '<label><span class="a11y">Search</span><input type="search" name="q" placeholder="Search or ask Hollis" autocomplete="off"></label>';
   form.querySelector('label').prepend(icon('search'));
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const q = form.q.value.trim();
-    // Other modules (e.g. the concierge) can claim the query via this event.
-    if (q) form.dispatchEvent(new CustomEvent('header:search', { bubbles: true, detail: { q } }));
+    if (!q) return;
+    form.q.value = '';
+    // Search is answered by the Brand Concierge (catalog-grounded), not a SERP.
+    import('../../scripts/brand-concierge-trigger.js').then(({ default: open }) => open(q));
   });
   return form;
+}
+
+// Load the quote-cart drawer on demand, so the header cart works on every
+// page without authoring the block. quote-cart's decorate() finds
+// `.nav-cart-count`, marks its link `data-quote-wired` and opens the drawer.
+let cartLoading = null;
+function loadCartDrawer() {
+  if (!cartLoading) {
+    const block = document.createElement('div');
+    block.className = 'quote-cart';
+    document.body.append(block);
+    cartLoading = loadBlock(block);
+  }
+  return cartLoading;
+}
+
+// Cart badge, kept in sync with the commerce store on every page. The first
+// click loads the drawer, then replays the click so quote-cart opens it.
+function wireCart(a, count) {
+  const sync = (quote) => {
+    const n = store.quoteCount(quote);
+    count.textContent = n;
+    a.classList.toggle('has-items', n > 0);
+  };
+  store.subscribe(sync);
+  sync(store.getQuote());
+  a.addEventListener('click', async (e) => {
+    if (a.dataset.quoteWired) return; // quote-cart's own handler opens it
+    e.preventDefault();
+    await loadCartDrawer();
+    if (a.dataset.quoteWired) a.click();
+  });
+}
+
+// "Ask Hollis" — Brand Concierge trigger, first in the utility row.
+function conciergeAction() {
+  const li = document.createElement('li');
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'header-action header-action-concierge';
+  btn.innerHTML = `${SPARKLE_SVG}<span class="a11y">Ask Hollis</span>`;
+  btn.querySelector('svg').classList.add('header-icon');
+  btn.addEventListener('click', async () => {
+    const { default: open } = await import('../../scripts/brand-concierge-trigger.js');
+    open();
+  });
+  li.append(btn);
+  return li;
 }
 
 function buildActions(section) {
@@ -162,10 +214,12 @@ function buildActions(section) {
       count.className = 'cart-count nav-cart-count';
       count.textContent = '0';
       a.append(count);
+      wireCart(a, count);
     }
     const p = a.closest('p');
     if (p) p.replaceWith(a);
   });
+  list.prepend(conciergeAction());
   return list;
 }
 

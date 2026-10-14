@@ -141,7 +141,8 @@
 
     /* Override the global .btn treatment: a plain underlined link here. */
     a,
-    a.btn {
+    a.btn,
+    button {
       min-width: 0;
       padding: 0;
       border: 0;
@@ -154,8 +155,19 @@
       color: var(--color-cuisinart-green);
     }
 
-    a:hover {
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
+
+    a:hover,
+    button:hover {
       text-decoration-thickness: 2px;
+    }
+
+    .is-added {
+      color: var(--color-green-600);
+      text-decoration: none;
     }
   }
 }

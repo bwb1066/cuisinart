@@ -95,6 +95,10 @@ header {
 
   .header-action {
     position: relative;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
     display: grid;
     place-items: center;
     width: 36px;

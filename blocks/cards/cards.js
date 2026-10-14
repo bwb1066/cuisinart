@@ -78,6 +78,51 @@ function decorateBody(body) {
   });
 }
 
+/** Model number from a cuisinart.com product URL: /slug/TOA-95NAS.html → TOA-95NAS */
+function skuFromHref(href) {
+  try {
+    return new URL(href, window.location.href).pathname.match(/\/([A-Z0-9][A-Z0-9-]*)\.html$/)?.[1] || null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Authored product tiles link to cuisinart.com. When the SKU is in this site's
+ * catalog, point the tile at our PDP and make "Add to Cart" add to the shared
+ * cart (site, concierge and agents all see the same cart).
+ */
+async function connectCommerce(track) {
+  const { default: store } = await import('../../scripts/commerce.js');
+  await Promise.all([...track.querySelectorAll('.cards-card')].map(async (card) => {
+    const titleLink = card.querySelector('.cards-title a');
+    const sku = skuFromHref(titleLink?.href || card.querySelector('a')?.href || '');
+    const product = sku ? await store.getProduct(sku) : null;
+    if (!product) return;
+    card.dataset.sku = product.sku;
+    const pdp = `${store.pdpUrl}?sku=${encodeURIComponent(product.sku)}`;
+    card.querySelectorAll('.cards-card-image a, .cards-title a').forEach((a) => { a.href = pdp; });
+
+    const cta = card.querySelector('.cards-cta');
+    if (!cta) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'cards-cta-link';
+    btn.textContent = cta.textContent.trim() || store.ctaLabel;
+    const label = btn.textContent;
+    btn.addEventListener('click', async () => {
+      await store.addToQuote(product.sku, 1, 'web');
+      btn.textContent = 'Added ✓';
+      btn.classList.add('is-added');
+      setTimeout(() => {
+        btn.textContent = label;
+        btn.classList.remove('is-added');
+      }, 1400);
+    });
+    cta.replaceChildren(btn);
+  }));
+}
+
 /**
  * @param {Element} el The block element
  */
@@ -112,6 +157,11 @@ export default function init(el) {
   // Rows with no price/rating/CTA (e.g. "Find Your Perfect Product") are
   // plain image tiles: a static grid rather than a paged product rail.
   const isProducts = !!track.querySelector('.cards-price, .cards-rating, .cards-cta');
-  if (isProducts) buildPager(el, track, 'products');
-  else el.classList.add('cards-tiles');
+  if (isProducts) {
+    buildPager(el, track, 'products');
+    // eslint-disable-next-line no-use-before-define
+    connectCommerce(track);
+  } else {
+    el.classList.add('cards-tiles');
+  }
 }
