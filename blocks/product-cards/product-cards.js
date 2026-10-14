@@ -1,181 +1,72 @@
-import store, { setThumb } from '../../scripts/commerce.js';
+import store from '../../scripts/commerce.js';
+import { loadCardStyles, productRail } from '../../scripts/utils/product-rail.js';
 
 /**
- * product-cards — a grid of catalog products with specs, availability, and an
- * Add-to-quote action. Reads from the shared commerce store, so it is fully
- * tenant-generic (specs render from each product's `specs` map).
+ * product-cards — catalog products as a native Cuisinart product rail (same
+ * tiles as the authored `cards` block), with Add to Cart wired to the shared
+ * commerce store.
  *
  * Authoring contract — labeled rows (| key | value |), all optional:
- *   | heading  | Featured Products        |  section title
- *   | skus     | AV-00003, AV-00007       |  explicit SKUs, in order
- *   | query    | metformin                |  free-text catalog search
- *   | category | Analgesics               |  filter by category
- *   | limit    | 6                        |  max cards (default 6)
- *   | search   | yes                      |  render a live spec search box
+ *   | heading  | Featured Products            |  section title
+ *   | skus     | DCC-3200NAS, TOA-95NAS       |  explicit SKUs, in order
+ *   | query    | air fryer                    |  catalog search
+ *   | category | Coffee Makers                |  filter by category
+ *   | limit    | 4                            |  max products (default 8)
  *
  * @param {Element} block The block element
  */
 
 function readConfig(block) {
   const cfg = {
-    heading: '', skus: [], query: '', category: '', limit: 6, search: false,
+    heading: '', skus: [], query: '', category: '', limit: 8,
   };
   [...block.children].forEach((row) => {
     const [keyCell, valCell] = row.children;
     const key = keyCell?.textContent.trim().toLowerCase();
     const val = valCell?.textContent.trim() || '';
     if (key === 'skus') cfg.skus = val.split(',').map((s) => s.trim()).filter(Boolean);
-    else if (key === 'limit') cfg.limit = parseInt(val, 10) || 6;
-    else if (key === 'search') cfg.search = /^(yes|true|on)$/i.test(val);
+    else if (key === 'limit') cfg.limit = parseInt(val, 10) || cfg.limit;
     else if (['heading', 'query', 'category'].includes(key)) cfg[key] = val;
   });
   return cfg;
 }
 
-/** Up to three non-empty spec values as chips. */
-function specChips(product) {
-  const wrap = document.createElement('ul');
-  wrap.className = 'product-card-specs';
-  Object.entries(product.specs || {})
-    .filter(([, v]) => v && !/^n\/a$/i.test(v))
-    .slice(0, 3)
-    .forEach(([k, v]) => {
-      const li = document.createElement('li');
-      li.innerHTML = `<span class="product-card-spec-k">${k}</span> ${v}`;
-      wrap.append(li);
-    });
-  return wrap;
-}
-
-/** Green "In stock" or an amber lead-time pill. */
-function availabilityPill(product) {
-  const pill = document.createElement('span');
-  pill.className = 'product-card-pill';
-  if (product.stock_qty > 0) {
-    pill.classList.add('is-stock');
-    pill.textContent = 'In stock';
-  } else {
-    pill.classList.add('is-lead');
-    pill.textContent = `Backordered · ${product.lead_time_days}d`;
+async function fetchProducts(cfg) {
+  if (cfg.skus.length) {
+    const resolved = await Promise.all(cfg.skus.map((s) => store.getProduct(s)));
+    return resolved.filter(Boolean).slice(0, cfg.limit);
   }
-  return pill;
-}
-
-function buildCard(product) {
-  const card = document.createElement('article');
-  card.className = 'product-card';
-  card.dataset.sku = product.sku;
-
-  // Link to the dynamic PDP template (?sku=) so browse → product detail works
-  // for any catalog product; fall back to the product's own URL if no sku.
-  const href = product.sku
-    ? `${store.pdpUrl}?sku=${encodeURIComponent(product.sku)}`
-    : (product.product_url || '#');
-
-  const media = document.createElement('a');
-  media.className = 'product-card-media';
-  media.href = href;
-  const img = document.createElement('img');
-  img.alt = '';
-  img.loading = 'lazy';
-  setThumb(img, product.image_url);
-  media.append(img, availabilityPill(product));
-
-  const body = document.createElement('div');
-  body.className = 'product-card-body';
-
-  const eyebrow = document.createElement('p');
-  eyebrow.className = 'product-card-eyebrow';
-  eyebrow.textContent = product.category || '';
-
-  const title = document.createElement('h3');
-  title.className = 'product-card-title';
-  title.innerHTML = `<a href="${href}">${product.name}</a>`;
-
-  const sku = document.createElement('p');
-  sku.className = 'product-card-sku';
-  sku.textContent = `Item #${product.sku}`;
-
-  const price = document.createElement('p');
-  price.className = 'product-card-price';
-  const unit = store.resolvePrice(product, 1);
-  price.innerHTML = `<strong>${store.formatPrice(unit)}</strong>`;
-  if ((product.price_breaks || []).length) {
-    price.insertAdjacentHTML('beforeend', ' <span class="product-card-vol">volume pricing</span>');
-  }
-
-  const add = document.createElement('button');
-  add.type = 'button';
-  add.className = 'product-card-add';
-  add.textContent = store.ctaLabel;
-  add.addEventListener('click', async () => {
-    await store.addToQuote(product.sku, 1, 'web');
-    add.textContent = 'Added ✓';
-    add.classList.add('is-added');
-    setTimeout(() => {
-      add.textContent = store.ctaLabel;
-      add.classList.remove('is-added');
-    }, 1400);
+  // Filter by category BEFORE the limit, or a category rail comes up short.
+  const products = await store.search({
+    query: cfg.query,
+    limit: cfg.category ? 500 : cfg.limit,
   });
-
-  body.append(eyebrow, title, sku, specChips(product), price, add);
-  card.append(media, body);
-  return card;
+  return cfg.category
+    ? products.filter((p) => p.category === cfg.category).slice(0, cfg.limit)
+    : products;
 }
 
 export default async function decorate(block) {
   const cfg = readConfig(block);
-
-  const section = document.createElement('div');
-  section.className = 'product-cards-inner';
-
+  block.replaceChildren();
   if (cfg.heading) {
     const h = document.createElement('h2');
     h.className = 'product-cards-heading';
     h.textContent = cfg.heading;
-    section.append(h);
+    block.append(h);
   }
 
-  const grid = document.createElement('div');
-  grid.className = 'product-cards-grid';
+  const [products] = await Promise.all([fetchProducts(cfg), loadCardStyles()]);
+  if (!products.length) return;
+  block.append(productRail(products));
 
-  const render = async (query) => {
-    let products;
-    if (cfg.skus.length && !query) {
-      const resolved = await Promise.all(cfg.skus.map((s) => store.getProduct(s)));
-      products = resolved.filter(Boolean);
-    } else {
-      // Filter by category BEFORE applying the limit, or a category grid comes
-      // up short (or empty) when the first page of results is other categories.
-      products = await store.search({
-        query: query || cfg.query,
-        limit: cfg.category ? 500 : cfg.limit,
-      });
-      if (cfg.category) {
-        products = products.filter((p) => p.category === cfg.category).slice(0, cfg.limit);
-      }
-    }
-    grid.replaceChildren(...products.map(buildCard));
-    if (!products.length) {
-      grid.innerHTML = '<p class="product-cards-empty">No matching products in the catalog.</p>';
-    }
-  };
-
-  if (cfg.search) {
-    const form = document.createElement('form');
-    form.className = 'product-cards-search';
-    form.setAttribute('role', 'search');
-    form.innerHTML = '<input type="search" placeholder="Search by name or spec — e.g. amoxicillin 500 mg" aria-label="Search products">';
-    const input = form.querySelector('input');
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      render(input.value);
-    });
-    input.addEventListener('input', () => { if (!input.value) render(''); });
-    section.append(form);
-  }
-
-  section.append(grid);
-  block.replaceChildren(section);
-  await render('');
+  // Re-price when a demo buyer logs in or out.
+  let key = store.getBuyer()?.key || '';
+  document.addEventListener('p13n:change', async () => {
+    const next = store.getBuyer()?.key || '';
+    if (next === key) return;
+    key = next;
+    const fresh = await fetchProducts(cfg);
+    block.querySelector('.cards')?.replaceWith(productRail(fresh));
+  });
 }

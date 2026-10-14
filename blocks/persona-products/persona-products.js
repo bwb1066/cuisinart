@@ -1,4 +1,5 @@
-import store, { setThumb } from '../../scripts/commerce.js';
+import store from '../../scripts/commerce.js';
+import { loadCardStyles, productRail } from '../../scripts/utils/product-rail.js';
 
 /**
  * persona-products — a commerce product rail that swaps its selection to match
@@ -18,7 +19,7 @@ import store, { setThumb } from '../../scripts/commerce.js';
 // overrides audienceGlobal, p13n:change events still carry the audience in
 // their detail (and fire once on load), so only a pre-event first paint uses this.
 const AUD_GLOBAL = 'aepAudience';
-const LIMIT = 4;
+const LIMIT = 8;
 
 function readGroups(block) {
   const groups = {};
@@ -29,62 +30,6 @@ function readGroups(block) {
     if (key && query) groups[key] = query;
   });
   return groups;
-}
-
-function pill(product) {
-  const el = document.createElement('span');
-  el.className = 'persona-product-pill';
-  if (product.stock_qty > 0) {
-    el.classList.add('is-stock');
-    el.textContent = 'In stock';
-  } else {
-    el.classList.add('is-lead');
-    el.textContent = `Backordered · ${product.lead_time_days}d`;
-  }
-  return el;
-}
-
-function buildCard(product) {
-  const href = product.sku
-    ? `${store.pdpUrl}?sku=${encodeURIComponent(product.sku)}`
-    : (product.product_url || '#');
-  const card = document.createElement('article');
-  card.className = 'persona-product-card';
-
-  const media = document.createElement('a');
-  media.className = 'persona-product-media';
-  media.href = href;
-  const img = document.createElement('img');
-  img.alt = '';
-  img.loading = 'lazy';
-  setThumb(img, product.image_url);
-  media.append(img, pill(product));
-
-  const body = document.createElement('div');
-  body.className = 'persona-product-body';
-  const unit = store.resolvePrice(product, 1);
-  const vol = (product.price_breaks || []).length
-    ? ' <span class="persona-product-vol">volume pricing</span>' : '';
-  body.innerHTML = `<p class="persona-product-eyebrow">${product.category || ''}</p>`
-    + `<h3 class="persona-product-title"><a href="${href}">${product.name}</a></h3>`
-    + `<p class="persona-product-price"><strong>${store.formatPrice(unit)}</strong>${vol}</p>`;
-
-  const add = document.createElement('button');
-  add.type = 'button';
-  add.className = 'persona-product-add';
-  add.textContent = store.ctaLabel || 'Add to quote';
-  add.addEventListener('click', async () => {
-    await store.addToQuote(product.sku, 1, 'web');
-    add.textContent = 'Added ✓';
-    add.classList.add('is-added');
-    setTimeout(() => {
-      add.textContent = store.ctaLabel || 'Add to quote';
-      add.classList.remove('is-added');
-    }, 1400);
-  });
-  body.append(add);
-  card.append(media, body);
-  return card;
 }
 
 export default function decorate(block) {
@@ -99,6 +44,7 @@ export default function decorate(block) {
   const grid = document.createElement('div');
   grid.className = 'persona-products-grid';
   block.append(title, grid);
+  const styles = loadCardStyles();
 
   const pickKey = (aud) => {
     if (aud && groups[aud]) return aud;
@@ -111,9 +57,9 @@ export default function decorate(block) {
     const query = groups[pickKey(aud)];
     token += 1;
     const mine = token;
-    const products = await store.search({ query, limit: LIMIT });
+    const [products] = await Promise.all([store.search({ query, limit: LIMIT }), styles]);
     if (mine !== token) return; // a newer render superseded this one
-    grid.replaceChildren(...products.map(buildCard));
+    grid.replaceChildren(productRail(products));
     block.classList.remove('is-updated');
     // eslint-disable-next-line no-void
     void block.offsetWidth;
