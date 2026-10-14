@@ -521,8 +521,16 @@ if (typeof window !== 'undefined') {
     });
   }
   // ?buyer=<key> activates contract pricing (and, REMOTE, resolves the cart).
-  const buyerFromUrl = new URLSearchParams(window.location.search).get('buyer');
-  if (buyerFromUrl) store.useBuyer(buyerFromUrl);
+  // A demo-panel login (sessionStorage) is restored here, synchronously, so the
+  // first product fetch on a reload already carries the buyer — the panel
+  // itself only loads in the lazy phase, after the blocks have priced.
+  let restoredBuyer = new URLSearchParams(window.location.search).get('buyer');
+  if (!restoredBuyer) {
+    try {
+      restoredBuyer = sessionStorage.getItem('aep_demo_buyer');
+    } catch (e) { /* ignore */ }
+  }
+  if (restoredBuyer) store.useBuyer(restoredBuyer);
   else if (REMOTE) ensureCart();
 }
 

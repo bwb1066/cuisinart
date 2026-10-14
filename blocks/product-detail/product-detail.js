@@ -58,12 +58,28 @@ function priceGrid(product, activeQty) {
   return table;
 }
 
+// Re-price when the demo panel logs a buyer in or out (it fires p13n:change).
+function watchBuyer(block, rerender) {
+  if (block.dataset.watchBuyer) return;
+  block.dataset.watchBuyer = 'true';
+  let key = store.getBuyer()?.key || '';
+  document.addEventListener('p13n:change', () => {
+    const next = store.getBuyer()?.key || '';
+    if (next === key) return;
+    key = next;
+    rerender(block);
+  });
+}
+
 export default async function decorate(block) {
+  watchBuyer(block, decorate);
   // Dynamic PDP: ?sku=<sku> in the URL wins, so one page template serves every
   // catalog product; the authored `sku` row is the fallback/default.
   const urlSku = (typeof window !== 'undefined')
     ? new URLSearchParams(window.location.search).get('sku') : null;
-  const sku = urlSku || readSku(block);
+  // Kept on the block so a re-render (buyer change) still knows the authored sku.
+  const sku = urlSku || block.dataset.sku || readSku(block);
+  block.dataset.sku = sku;
   const product = await store.getProduct(sku);
 
   if (!product) {
