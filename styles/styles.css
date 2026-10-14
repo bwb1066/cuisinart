@@ -332,6 +332,11 @@ a {
     margin-top: 0;
   }
 
+  /* A section left empty once its metadata is consumed adds no space. */
+  &:empty {
+    display: none;
+  }
+
   &:has(> .block-content > .hero:only-child) {
     margin-block: 0;
   }
