@@ -1,4 +1,4 @@
-# bwb1066-ak-base
+# cuisinart
 
 Controlled baseline for spinning up AEM Edge Delivery replica sites. It is a
 **mirror of [`aemsites/author-kit`](https://github.com/aemsites/author-kit)**

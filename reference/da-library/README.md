@@ -1,4 +1,4 @@
-# DA Library Setup — aem-* Blocks (bwb1066/bwb1066-ak-base)
+# DA Library Setup — aem-* Blocks (bwb1066/cuisinart)
 
 ## Steps
 
