@@ -9,19 +9,17 @@ const FOOTER_PATH = '/fragments/nav/footer';
  */
 export default async function init(el) {
   const { locale } = getConfig();
-  const footerMeta = getMetadata('footer');
-  const path = footerMeta || FOOTER_PATH;
+  // `footer` metadata is the block name (utils/footer.js); the path is its own key.
+  const path = getMetadata('footer-path') || FOOTER_PATH;
   try {
     const fragment = await loadFragment(`${locale.prefix}${path}`);
     fragment.classList.add('footer-content');
 
     const sections = [...fragment.querySelectorAll('.section')];
 
-    const copyright = sections.pop();
-    copyright.classList.add('section-copyright');
-
-    const legal = sections.pop();
-    legal.classList.add('section-legal');
+    // Tolerate minimal footers: one section is just copyright, none is empty.
+    sections.pop()?.classList.add('section-copyright');
+    sections.pop()?.classList.add('section-legal');
 
     el.append(fragment);
   } catch (e) {

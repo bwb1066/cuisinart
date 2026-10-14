@@ -140,7 +140,10 @@ function decorateNavItem(li) {
 function decorateBrandSection(section) {
   section.classList.add('brand-section');
   const brandLink = section.querySelector('a');
+  // A minimal/empty header fragment may have no brand link or no link text.
+  if (!brandLink) return;
   const [, text] = brandLink.childNodes;
+  if (!text) return;
   const span = document.createElement('span');
   span.className = 'brand-text';
   span.append(text);
@@ -184,8 +187,8 @@ async function decorateHeader(fragment) {
  * @param {Element} el The header element
  */
 export default async function init(el) {
-  const headerMeta = getMetadata('header');
-  const path = headerMeta || HEADER_PATH;
+  // `header` metadata is the block name (ak.js); the fragment path is its own key.
+  const path = getMetadata('header-path') || HEADER_PATH;
   try {
     const fragment = await loadFragment(`${locale.prefix}${path}`);
     fragment.classList.add('header-content');
