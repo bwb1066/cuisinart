@@ -168,6 +168,7 @@
 
   /* fonts */
   --font-family: montserrat, "Trebuchet MS", sans-serif;
+  --heading-font-family: gelica, georgia, serif;
 
   /* headings */
   --heading-font-size-xxl: 32.44px;
@@ -332,6 +333,7 @@ h3,
 h4,
 h5,
 h6 {
+  font-family: var(--heading-font-family);
   font-weight: 600;
   line-height: var(--heading-line-height);
 }
