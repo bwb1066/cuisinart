@@ -223,3 +223,128 @@
     }
   }
 }
+
+/* ---------- Cuisinart ---------- */
+main .hero {
+  --gradient-start: rgb(26 24 22 / 45%);
+  --gradient-end: rgb(26 24 22 / 0%);
+  --default-min-height: 420px;
+
+  color: var(--color-cream);
+
+  .hero-heading {
+    font-size: var(--heading-font-size-xxl);
+    line-height: 1.3;
+    color: inherit;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  /* A hero sharing its section with other blocks (e.g. the featured recipe)
+     sits inside the content width with its title at the bottom-left. */
+  &:not(:only-child) {
+    --default-min-height: 460px;
+
+    .hero-heading {
+      font-size: var(--heading-font-size-l);
+    }
+
+    .hero-foreground {
+      align-items: end;
+      padding: 24px;
+      background: linear-gradient(0deg, var(--gradient-start) 0%, var(--gradient-end) 60%);
+    }
+  }
+
+  .hero-foreground {
+    p {
+      font-size: 20px;
+      line-height: 28px;
+    }
+
+    .hero-detail {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .btn-group,
+    p:has(> .btn) {
+      margin-top: 40px;
+    }
+  }
+
+  /* Text panel beside a square image (cuisinart.com "fifty" layout). */
+  &.split {
+    color: var(--color-light);
+    background: var(--color-cuisinart-green);
+
+    .hero-foreground {
+      display: grid;
+      grid-template-columns: 1fr;
+      max-width: none;
+      min-height: 0;
+      padding: 0;
+      background: none;
+    }
+
+    .fg-text {
+      width: auto;
+      margin: 0;
+      padding: 48px 24px;
+      align-self: center;
+    }
+
+    .hero-heading {
+      font-size: var(--heading-font-size-xl);
+      line-height: 1.25;
+    }
+
+    .fg-media {
+      aspect-ratio: 1;
+
+      p {
+        height: 100%;
+        margin: 0;
+      }
+
+      picture,
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+@media (width >= 900px) {
+  main .hero {
+    --default-min-height: 545px;
+
+    .hero-foreground {
+      grid-template-columns: 45% 45%;
+    }
+
+    &:not(:only-child) .hero-foreground {
+      padding: 40px;
+    }
+
+    &.split {
+      .hero-foreground {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .fg-text {
+        padding: 24px 108px;
+      }
+    }
+  }
+}

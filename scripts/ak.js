@@ -209,6 +209,8 @@ export function decorateLink(config, a) {
       const found = config.linkBlocks.some((pattern) => {
         const key = Object.keys(pattern)[0];
         if (!href.includes(pattern[key])) return false;
+        // A YouTube link in a list (e.g. footer socials) is a link, not an embed.
+        if (key === 'youtube' && a.closest('li')) return false;
         a.classList.add(key, 'auto-block');
         return true;
       });

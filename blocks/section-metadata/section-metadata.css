@@ -5,7 +5,10 @@
 
   padding: var(--top-bottom-spacing) 0;
 
-  > * {
+  /* Only sections whose background was scheme-checked (setColorScheme) get
+     forced text color; otherwise inherit, so e.g. the green footer stays white. */
+  > .light-scheme,
+  > .dark-scheme {
     color: light-dark(var(--color-dark), var(--color-light));
   }
 

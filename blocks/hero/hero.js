@@ -55,9 +55,43 @@ function decorateForeground(fg) {
   }
 }
 
+/**
+ * A one-row hero authored with its image as the first paragraph of the text
+ * cell (common in migrated content) is really a background image: lift it into
+ * its own background row so it fills the hero instead of sitting inline.
+ */
+function liftInlineBackground(el, fg) {
+  const firstCell = fg.querySelector(':scope > div');
+  const first = firstCell?.firstElementChild;
+  const pic = first?.tagName === 'P' && first.children.length === 1 && first.querySelector(':scope > picture');
+  if (!pic || first.textContent.trim()) return null;
+  const bg = document.createElement('div');
+  const cell = document.createElement('div');
+  cell.append(pic);
+  bg.append(cell);
+  first.remove();
+  el.prepend(bg);
+  return bg;
+}
+
+function decorateSplit(fg) {
+  for (const cell of fg.children) {
+    const pic = cell.querySelector('picture');
+    if (pic && !cell.querySelector('h1, h2, h3, h4, h5, h6, p:not(:has(> picture))')) {
+      cell.classList.add('fg-media');
+      setBackgroundFocus(pic.querySelector('img'));
+    }
+  }
+}
+
 export default async function init(el) {
   const rows = [...el.querySelectorAll(':scope > div')];
   const fg = rows.pop();
+  if (!rows.length && !el.classList.contains('split')) {
+    const lifted = liftInlineBackground(el, fg);
+    if (lifted) rows.push(lifted);
+  }
+  if (el.classList.contains('split')) decorateSplit(fg);
   fg.classList.add('hero-foreground');
   decorateForeground(fg);
   if (rows.length) {

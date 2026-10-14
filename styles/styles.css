@@ -1,57 +1,8 @@
+/* Work Sans (Google Fonts) + Gelica (Typekit) load from head.html. */
 @font-face {
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url("/styles/fonts/montserrat.woff2") format("woff2");
-  unicode-range:
-    U+0000-00FF,
-    U+0131,
-    U+0152-0153,
-    U+02BB-02BC,
-    U+02C6,
-    U+02DA,
-    U+02DC,
-    U+0304,
-    U+0308,
-    U+0329,
-    U+2000-206F,
-    U+20AC,
-    U+2122,
-    U+2191,
-    U+2193,
-    U+2212,
-    U+2215,
-    U+FEFF,
-    U+FFFD;
-}
-
-@font-face {
-  font-family: Montserrat;
-  font-style: italic;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url("/styles/fonts/montserrat-italic.woff2") format("woff2");
-  unicode-range:
-    U+0000-00FF,
-    U+0131,
-    U+0152-0153,
-    U+02BB-02BC,
-    U+02C6,
-    U+02DA,
-    U+02DC,
-    U+0304,
-    U+0308,
-    U+0329,
-    U+2000-206F,
-    U+20AC,
-    U+2122,
-    U+2191,
-    U+2193,
-    U+2212,
-    U+2215,
-    U+FEFF,
-    U+FFFD;
+  font-family: "Work Sans Fallback";
+  size-adjust: 111%;
+  src: local("Arial");
 }
 
 :root {
@@ -68,8 +19,8 @@
   --spacing-s: 8px;
   --spacing-xs: 4px;
 
-  /* color schemes */
-  color-scheme: light dark;
+  /* color schemes: pinned light, the replica has no dark theme */
+  color-scheme: light;
 
   /* color tokens */
   --color-gray-100: #f1f1f1;
@@ -159,25 +110,37 @@
   --color-dark-base: 0 0 0;
   --color-light: rgb(255 255 255);
   --color-dark: rgb(0 0 0);
-  --color-text: light-dark(var(--color-dark), var(--color-light));
-  --color-link: light-dark(var(--color-gray-900), var(--color-gray-100));
-  --color-brand: var(--color-purple-500);
-  --color-accent: light-dark(var(--color-magenta-600), var(--color-magenta-500));
-  --color-background: light-dark(var(--color-light), var(--color-dark));
-  --color-shaded: light-dark(#f9f9f9, #111);
+  --color-text: var(--color-ink);
+  --color-link: var(--color-cuisinart-green);
+  --color-brand: var(--color-cuisinart-green);
+  --color-accent: var(--color-cuisinart-yellow);
+  --color-background: var(--color-light);
+  --color-shaded: #f6f3ee;
+
+  /* Cuisinart palette (from cuisinart.com global_cuisinart.css) */
+  --color-cuisinart-green: #233c28;
+  --color-cuisinart-green-light: #45754e;
+  --color-cuisinart-yellow: #ffc31a;
+  --color-cuisinart-yellow-hover: #ffdc7c;
+  --color-cream: #fffaee;
+  --color-sand: #e3ded5;
+  --color-ink: #1a1816;
+  --color-stone: #766d62;
+  --color-sale: #c83101;
 
   /* fonts */
-  --font-family: montserrat, "Trebuchet MS", sans-serif;
+  --font-family: "Work Sans", "Work Sans Fallback", arial, sans-serif;
   --heading-font-family: gelica, georgia, serif;
+  --radius: 8px;
 
   /* headings */
-  --heading-font-size-xxl: 32.44px;
-  --heading-font-size-xl: 28.83px;
-  --heading-font-size-l: 25.63px;
-  --heading-font-size-m: 22.78px;
-  --heading-font-size-s: 20.25px;
+  --heading-font-size-xxl: 36px;
+  --heading-font-size-xl: 32px;
+  --heading-font-size-l: 28px;
+  --heading-font-size-m: 24px;
+  --heading-font-size-s: 20px;
   --heading-font-size-xs: 18px;
-  --heading-line-height: 1.15;
+  --heading-line-height: 1.25;
 
   /* body */
   --body-font-size-xxxl: 25px;
@@ -187,7 +150,7 @@
   --body-font-size-m: 16px;
   --body-font-size-s: 14px;
   --body-font-size-xs: 12px;
-  --body-line-height: 1.6;
+  --body-line-height: 1.5;
 
   /* misc */
   --header-height: 64px;
@@ -210,7 +173,7 @@ body {
   margin: 0;
   background-color: var(--color-background);
   color: var(--color-text);
-  font-family: "Trebuchet MS", sans-serif;
+  font-family: arial, sans-serif;
   font-size: var(--body-font-size-m);
   line-height: var(--body-line-height);
   padding: var(--header-height) 0 0;
@@ -242,56 +205,106 @@ a {
 
   &.btn {
     display: inline-block;
-    line-height: 1;
-    font-weight: 500;
-    text-decoration: none;
-    border: 2px solid;
-    padding: 8px 12px;
+    min-width: 288px;
     box-sizing: border-box;
+    padding: 15px 24px;
+    border: 1px solid var(--color-cuisinart-green);
+    border-radius: var(--radius);
+    font-family: var(--font-family);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: var(--color-cuisinart-green);
+    background: var(--color-cuisinart-yellow);
+
+    &:hover {
+      background: var(--color-cuisinart-yellow-hover);
+    }
 
     &.btn-outline {
       background: transparent;
     }
   }
 
-  &.btn-accent {
-    color: #fff;
-    background: var(--color-accent);
-    border: 2px solid var(--color-accent);
-
-    &.btn-outline {
-      color: var(--color-accent);
-    }
-  }
-
-  &.btn-primary {
-    color: var(--color-background);
-    background-color: var(--color-text);
-    border: 2px solid var(--color-text);
-
-    &.btn-outline {
-      color: var(--color-text);
-      background: transparent;
-    }
-  }
-
+  &.btn-accent,
   &.btn-secondary {
-    color: var(--color-background);
-    background-color: var(--color-gray-500);
-    border: 2px solid var(--color-gray-500);
+    color: var(--color-light);
+    background: var(--color-cuisinart-green);
 
-    &.btn-outline {
-      color: var(--color-gray-500);
+    &:hover {
+      background: var(--color-cuisinart-green-light);
     }
   }
 
   &.btn-negative {
-    color: #fff;
+    color: var(--color-light);
     background-color: var(--color-red-600);
-    border: 2px solid var(--color-red-600);
+    border-color: var(--color-red-600);
+  }
+}
 
-    &.btn-outline {
-      color: var(--color-red-600);
+/* rail pager (scripts/utils/rail.js) */
+.rail-pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 24px;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.rail-arrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--color-cuisinart-green);
+  border-radius: 50%;
+  background: var(--color-light);
+  color: var(--color-cuisinart-green);
+
+  svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentcolor;
+    stroke-width: 2;
+  }
+
+  &.rail-next svg {
+    transform: scaleX(-1);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+}
+
+.rail-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  button {
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    border: 0;
+    border-radius: 5px;
+    background: var(--color-sand);
+    transition: width 0.2s;
+
+    &.is-active {
+      width: 32px;
+      background: var(--color-cuisinart-green);
     }
   }
 }
@@ -299,10 +312,58 @@ a {
 /* sections */
 .section {
   display: block;
+  margin-block: 48px;
 
-  > .default-content {
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:has(> .block-content > .hero:only-child) {
+    margin-block: 0;
+  }
+
+  > .default-content,
+  > .block-content {
     max-width: var(--grid-container-width);
     margin: 0 auto;
+  }
+
+  /* A lone hero runs full-bleed; heroes grouped with other blocks stay contained. */
+  > .block-content:has(> .hero:only-child) {
+    max-width: none;
+  }
+
+  > .default-content + .block-content,
+  > .block-content + .default-content {
+    margin-top: 24px;
+  }
+
+  /* Text CTAs between blocks ("View all recipes") are centered outline buttons. */
+  > .default-content a.btn {
+    min-width: 0;
+    padding: 10px 12px;
+    background: var(--color-light);
+
+    &:hover {
+      background: var(--color-shaded);
+    }
+  }
+
+  > .default-content p:has(> a.btn:only-child),
+  > .default-content .btn-group {
+    text-align: center;
+  }
+
+  /* Cream band (section style), e.g. "Peace of Mind". */
+  &.cream {
+    margin-block: 0;
+    padding: 64px 0;
+    background: var(--color-cream);
+
+    h2 {
+      text-align: center;
+      color: var(--color-ink);
+    }
   }
 }
 
@@ -336,6 +397,7 @@ h6 {
   font-family: var(--heading-font-family);
   font-weight: 600;
   line-height: var(--heading-line-height);
+  color: var(--color-cuisinart-green);
 }
 
 h1 { font-size: var(--heading-font-size-xxl); }
@@ -372,9 +434,21 @@ svg {
 
 /* @media (width >= 1200px) {} */
 
+@media (width >= 900px) {
+  main .section > .default-content h2 {
+    font-size: var(--heading-font-size-xxl);
+  }
+
+  :root {
+    --heading-font-size-xxl: 48px;
+    --heading-font-size-xl: 40px;
+    --heading-font-size-l: 32px;
+  }
+}
+
 @media (width >= 1440px) {
   :root {
-    --grid-container-width: 1200px;
+    --grid-container-width: 1224px;
   }
 }
 

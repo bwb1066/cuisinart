@@ -100,3 +100,54 @@
     }
   }
 }
+
+/* "Peace of Mind" style: centered value props in a cream band. Columns that
+   carry no authored icon get the Warranty / Shipping / Returns marks. */
+.cream .columns {
+  --columns-gap: 32px;
+
+  text-align: center;
+
+  .row {
+    align-items: start;
+  }
+
+  .col {
+    --col-icon: url("../../img/icons/receipt.svg");
+
+    &:nth-child(2) {
+      --col-icon: url("../../img/icons/delivery.svg");
+    }
+
+    &:nth-child(3) {
+      --col-icon: url("../../img/icons/calendar.svg");
+    }
+
+    &:not(:has(.icon))::before {
+      content: "";
+      display: block;
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 16px;
+      background: var(--color-cuisinart-green);
+      mask: var(--col-icon) center / contain no-repeat;
+    }
+  }
+
+  h3 {
+    margin: 0 0 32px;
+    font-size: 20px;
+    line-height: 28px;
+    color: #444;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+
+  p {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+}

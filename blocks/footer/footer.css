@@ -1,57 +1,150 @@
 footer {
+  display: block;
+  background: var(--color-cuisinart-green);
+  color: var(--color-light);
+  font-family: var(--font-family);
+
   a {
+    color: inherit;
     text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
-  .footer-content {
-    max-width: var(--grid-container-width);
-    margin: 48px auto;
-    font-size: 14px;
-  }
-
-  .section-legal ul {
+  ul {
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  .section-copyright p {
+  .footer-content {
+    max-width: var(--grid-container-width);
+    margin: 0 auto;
+    padding: 48px 0 32px;
+  }
+
+  .section .default-content {
+    max-width: none;
     margin: 0;
   }
 
-  .section {
+  .footer-columns {
+    display: grid;
+    gap: 32px;
+  }
+
+  .footer-column {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      margin: 0 0 16px;
+      font-size: 20px;
+      line-height: 28px;
+      color: inherit;
+    }
+
+    ul + :is(h1, h2, h3, h4, h5, h6) {
+      margin-top: 32px;
+    }
+
+    li {
+      margin: 0 0 16px;
+      line-height: 24px;
+    }
+  }
+
+  .footer-social {
+    display: grid;
+    grid-template-columns: repeat(2, 40px);
+    gap: 12px 26px;
+
+    li {
+      margin: 0;
+    }
+
+    a {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+    }
+
+    svg {
+      width: 28px;
+      height: 28px;
+      fill: currentcolor;
+    }
+  }
+
+  .section-legal {
+    margin-top: 32px;
+
+    p {
+      margin: 0 0 24px;
+    }
+
     .default-content {
-      max-width: initial;
-      margin: initial;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* "© … All Rights Reserved." sits on the rule with the legal links. */
+    p:has(+ ul) {
+      padding-top: 32px;
+      border-top: 1px solid rgb(255 255 255 / 60%);
+    }
+
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 26px;
+    }
+
+    li {
+      margin: 0;
+    }
+
+    ul a {
+      text-decoration: underline;
     }
   }
 }
 
 @media (width >= 900px) {
   footer {
-    margin: 0;
-
-    .section-legal {
-      display: flex;
-      justify-content: end;
-      gap: var(--spacing-xl);
-      margin-bottom: 24px;
-
-      ul {
-        display: flex;
-        justify-content: end;
-        gap: var(--spacing-xl);
-      }
-
-      li {
-        margin: 0;
-      }
+    .footer-columns {
+      grid-template-columns: repeat(4, 1fr);
     }
 
-    .section-copyright {
-      display: flex;
-      justify-content: end;
-      gap: var(--spacing-xl);
+    /* The authored columns are pairs of heading + list; let them flow 4-up. */
+    .section-links .footer-columns {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .section-legal {
+      .default-content {
+        display: grid;
+        grid-template-columns: auto 1fr;
+      }
+
+      p:first-child:not(:has(+ ul)) {
+        grid-column: 1 / -1;
+      }
+
+      p:has(+ ul) {
+        margin: 0;
+      }
+
+      ul {
+        justify-content: end;
+        padding: 32px 0 0 48px;
+        border-top: 1px solid rgb(255 255 255 / 60%);
+      }
     }
   }
 }
