@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>cuisinart block library</title>
+<style>body{font-family:-apple-system,sans-serif;max-width:900px;margin:2em auto;padding:0 1em;} .note{color:#666;font-size:0.9em;border-left:3px solid #ccc;padding-left:1em;} .doc{border-top:6px solid #333;margin-top:4em;padding-top:1em;} nav a{margin-right:1em;}</style>
+</head><body>
+<h1 class="note">cuisinart: DA block library paste file</h1>
+<p class="note">One section per DA doc. For each section, create the doc at the path shown (in <strong>bwb1066/cuisinart/docs/library/blocks/</strong>), copy everything between the two dashed rules (from the H1 down), paste it, then Preview. Leave out the gray notes. Sample images are from the AEM Block Collection; swap in Cuisinart images any time.</p>
+<nav class="note"><a href="#hero">hero</a><a href="#card">card</a><a href="#section-metadata">section-metadata</a><a href="#columns">columns</a><a href="#metadata">metadata</a><a href="#table">table</a><a href="#aem-accordion">aem-accordion</a><a href="#aem-tabs">aem-tabs</a><a href="#aem-carousel">aem-carousel</a><a href="#aem-cards">aem-cards</a><a href="#aem-cards-no-images">aem-cards-no-images</a><a href="#aem-video">aem-video</a><a href="#aem-fragment">aem-fragment</a><a href="#fragment-include">fragment-include</a></nav>
+<div class="doc" id="hero">
+<p class="note">DA doc: <strong>docs/library/blocks/hero</strong> &nbsp;·&nbsp; sheet name: Hero</p>
+<hr style="border-style:dashed">
+<h1>Hero</h1>
+<p>Two rows: background image, then foreground copy. Variants: <code>light</code>, <code>dark</code>, <code>small</code>, <code>large</code>, <code>full</code>, <code>quiet-background</code>.</p><table border="1" style="border-collapse:collapse; margin:1.5em 0; width:100%;">
+  <tr><td colspan="1" style="background:#e8f0fe; font-weight:bold; padding:8px;">hero</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><img src="https://main--aem-block-collection--adobe.aem.live/block-collection/media_180455b829a1e29ac2451440ba27ebd9692d285ab.jpg?width=2000&format=jpg&optimize=medium" alt="Sample image"></td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><p>New arrivals</p><h1>Savor the Good Life</h1><p>Kitchen appliances and cookware for every recipe.</p><p><strong><a href="/">Shop now</a></strong></p></td></tr>
+</table>
+<hr><table border="1" style="border-collapse:collapse; margin:1.5em 0; width:100%;">
+  <tr><td colspan="1" style="background:#e8f0fe; font-weight:bold; padding:8px;">hero (light, small)</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><img src="https://main--aem-block-collection--adobe.aem.live/block-collection/media_10c08bd43d12ec89aea76de7423a6081736b75be1.jpg?width=2000&format=jpg&optimize=medium" alt="Sample image"></td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><h2>Compact hero</h2><p>A shorter, light-text-on-light variant.</p></td></tr>
+</table>
+
+<hr style="border-style:dashed">
+</div>
+<div class="doc" id="card">
+<p class="note">DA doc: <strong>docs/library/blocks/card</strong> &nbsp;·&nbsp; sheet name: Card</p>
+<hr style="border-style:dashed">
+<h1>Card</h1>
+<p>One card per block; put several in a section with a <code>grid</code> section-metadata. Variants: <code>center</code>, <code>quiet</code>.</p><table border="1" style="border-collapse:collapse; margin:1.5em 0; width:100%;">
+  <tr><td colspan="1" style="background:#e8f0fe; font-weight:bold; padding:8px;">card</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><p><img src="https://main--aem-block-collection--adobe.aem.live/block-collection/media_180455b829a1e29ac2451440ba27ebd9692d285ab.jpg?width=750&format=jpg&optimize=medium" alt="Sample image"></p><h3>Coffee Makers</h3><p>Brew the perfect cup, every time.</p><p><a href="/">Shop now</a></p></td></tr>
+</table>
+<table border="1" style="border-collapse:collapse; margin:1.5em 0; width:100%;">
+  <tr><td colspan="1" style="background:#e8f0fe; font-weight:bold; padding:8px;">card</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><p><img src="https://main--aem-block-collection--adobe.aem.live/block-collection/media_10c08bd43d12ec89aea76de7423a6081736b75be1.jpg?width=750&format=jpg&optimize=medium" alt="Sample image"></p><h3>Food Processors</h3><p>Chop, slice and shred in seconds.</p><p><a href="/">Shop now</a></p></td></tr>
+</table>
+<table border="1" style="border-collapse:collapse; margin:1.5em 0; width:100%;">
+  <tr><td colspan="1" style="background:#e8f0fe; font-weight:bold; padding:8px;">card</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><p><img src="https://main--aem-block-collection--adobe.aem.live/block-collection/media_18912f31c9fe3034c15c130bd65dce423188165a9.jpg?width=750&format=jpg&optimize=medium" alt="Sample image"></p><h3>Cookware</h3><p>Pro-quality stainless and nonstick.</p><p><a href="/">Shop now</a></p></td></tr>
+</table>
+<table border="1" style="border-collapse:collapse; margin:1.5em 0; width:100%;">
+  <tr><td colspan="2" style="background:#e8f0fe; font-weight:bold; padding:8px;">section-metadata</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;">grid</td><td style="padding:8px; vertical-align:top;">3</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;">gap</td><td style="padding:8px; vertical-align:top;">m</td></tr>
+</table>
+
+<hr style="border-style:dashed">
+</div>
+<div class="doc" id="section-metadata">
+<p class="note">DA doc: <strong>docs/library/blocks/section-metadata</strong> &nbsp;·&nbsp; sheet name: Section Metadata</p>
+<hr style="border-style:dashed">
+<h1>Section Metadata</h1>
+<p>Place at the end of a section (sections are separated by <code>---</code>). Keys: <code>grid</code> (2–6), <code>gap</code> / <code>spacing</code> (xs–xxl), <code>container</code> (2, 4, 6), <code>layout</code> (bento), <code>background</code> (a color, <code>color-token-&lt;name&gt;</code>, or an image URL).</p><h2>Sample section</h2><p>This section has a light gray background and large spacing.</p><table border="1" style="border-collapse:collapse; margin:1.5em 0; width:100%;">
+  <tr><td colspan="2" style="background:#e8f0fe; font-weight:bold; padding:8px;">section-metadata</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;">background</td><td style="padding:8px; vertical-align:top;">#f5f5f5</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;">spacing</td><td style="padding:8px; vertical-align:top;">l</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;">container</td><td style="padding:8px; vertical-align:top;">4</td></tr>
+</table>
+
+<hr style="border-style:dashed">
+</div>
+<div class="doc" id="columns">
+<p class="note">DA doc: <strong>docs/library/blocks/columns</strong> &nbsp;·&nbsp; sheet name: Columns</p>
+<hr style="border-style:dashed">
+<h1>Columns</h1>
+<p>Each row is a set of columns. Variants: <code>align-top</code>, <code>image-cover</code>, <code>z-pattern</code>, <code>gap-xs</code> … <code>gap-xxl</code>.</p><table border="1" style="border-collapse:collapse; margin:1.5em 0; width:100%;">
+  <tr><td colspan="2" style="background:#e8f0fe; font-weight:bold; padding:8px;">columns</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><img src="https://main--aem-block-collection--adobe.aem.live/block-collection/media_10c08bd43d12ec89aea76de7423a6081736b75be1.jpg?width=750&format=jpg&optimize=medium" alt="Sample image"></td><td style="padding:8px; vertical-align:top;"><h2>Built for Everyday Cooking</h2><p>From weeknight dinners to holiday baking, Cuisinart has the tools you need.</p><p><a href="/">Learn more</a></p></td></tr>
+</table>
+<hr><table border="1" style="border-collapse:collapse; margin:1.5em 0; width:100%;">
+  <tr><td colspan="2" style="background:#e8f0fe; font-weight:bold; padding:8px;">columns (image-cover, z-pattern)</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><img src="https://main--aem-block-collection--adobe.aem.live/block-collection/media_18912f31c9fe3034c15c130bd65dce423188165a9.jpg?width=750&format=jpg&optimize=medium" alt="Sample image"></td><td style="padding:8px; vertical-align:top;"><h3>Row one</h3><p>Image left, copy right.</p></td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><h3>Row two</h3><p>Copy left, image right.</p></td><td style="padding:8px; vertical-align:top;"><img src="https://main--aem-block-collection--adobe.aem.live/block-collection/media_1176ed1f1f1e2d0f5609baf3e5cb86cf3365b1746.jpg?width=750&format=jpg&optimize=medium" alt="Sample image"></td></tr>
+</table>
+
+<hr style="border-style:dashed">
+</div>
+<div class="doc" id="metadata">
+<p class="note">DA doc: <strong>docs/library/blocks/metadata</strong> &nbsp;·&nbsp; sheet name: Metadata</p>
+<hr style="border-style:dashed">
+<h1>Metadata</h1>
+<p>Page-level metadata. Put it at the very end of the page. Common keys: <code>title</code>, <code>description</code>, <code>image</code>, <code>template</code>, <code>theme</code>.</p><table border="1" style="border-collapse:collapse; margin:1.5em 0; width:100%;">
+  <tr><td colspan="2" style="background:#e8f0fe; font-weight:bold; padding:8px;">metadata</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;">title</td><td style="padding:8px; vertical-align:top;">Sample Page Title</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;">description</td><td style="padding:8px; vertical-align:top;">A one-sentence description used for SEO and social cards.</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;">image</td><td style="padding:8px; vertical-align:top;"><img src="https://main--aem-block-collection--adobe.aem.live/block-collection/media_180455b829a1e29ac2451440ba27ebd9692d285ab.jpg?width=1200&format=jpg&optimize=medium" alt="Sample image"></td></tr>
+</table>
+
+<hr style="border-style:dashed">
+</div>
+<div class="doc" id="table">
+<p class="note">DA doc: <strong>docs/library/blocks/table</strong> &nbsp;·&nbsp; sheet name: Table</p>
+<hr style="border-style:dashed">
+<h1>Table</h1>
+<p>Paste a regular table inside the single cell. Its first row becomes the header.</p><table border="1" style="border-collapse:collapse; margin:1.5em 0; width:100%;">
+  <tr><td colspan="1" style="background:#e8f0fe; font-weight:bold; padding:8px;">table</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><table border="1" style="border-collapse:collapse;"><tr><td>Model</td><td>Capacity</td><td>Wattage</td></tr><tr><td>DCC-3200</td><td>14 cups</td><td>1100 W</td></tr><tr><td>DFP-14BCNY</td><td>14 cups</td><td>720 W</td></tr><tr><td>CPT-180</td><td>4 slices</td><td>1800 W</td></tr></table></td></tr>
+</table>
+
+<hr style="border-style:dashed">
+</div>
+<div class="doc" id="aem-accordion">
+<p class="note">DA doc: <strong>docs/library/blocks/aem-accordion</strong> &nbsp;·&nbsp; sheet name: aem-Accordion</p>
+<hr style="border-style:dashed">
+<h1>aem-Accordion</h1>
+
+<table border="1" style="border-collapse:collapse; margin:1.5em 0; width:100%;">
+  <tr><td colspan="2" style="background:#e8f0fe; font-weight:bold; padding:8px;">aem-accordion</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;">First question?</td><td style="padding:8px; vertical-align:top;"><p>Answer to the first question goes here.</p></td></tr>
+  <tr><td style="padding:8px; vertical-align:top;">Second question?</td><td style="padding:8px; vertical-align:top;"><p>Answer to the second question goes here.</p></td></tr>
+  <tr><td style="padding:8px; vertical-align:top;">Third question?</td><td style="padding:8px; vertical-align:top;"><p>Answer to the third question goes here.</p></td></tr>
+</table>
+
+
+<hr style="border-style:dashed">
+</div>
+<div class="doc" id="aem-tabs">
+<p class="note">DA doc: <strong>docs/library/blocks/aem-tabs</strong> &nbsp;·&nbsp; sheet name: aem-Tabs</p>
+<hr style="border-style:dashed">
+<h1>aem-Tabs</h1>
+
+<table border="1" style="border-collapse:collapse; margin:1.5em 0; width:100%;">
+  <tr><td colspan="2" style="background:#e8f0fe; font-weight:bold; padding:8px;">aem-tabs</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;">Tab One</td><td style="padding:8px; vertical-align:top;"><p>Content for the first tab.</p></td></tr>
+  <tr><td style="padding:8px; vertical-align:top;">Tab Two</td><td style="padding:8px; vertical-align:top;"><p>Content for the second tab.</p></td></tr>
+  <tr><td style="padding:8px; vertical-align:top;">Tab Three</td><td style="padding:8px; vertical-align:top;"><p>Content for the third tab.</p></td></tr>
+</table>
+
+
+<hr style="border-style:dashed">
+</div>
+<div class="doc" id="aem-carousel">
+<p class="note">DA doc: <strong>docs/library/blocks/aem-carousel</strong> &nbsp;·&nbsp; sheet name: aem-Carousel</p>
+<hr style="border-style:dashed">
+<h1>aem-Carousel</h1>
+<table border="1" style="border-collapse:collapse; margin:1.5em 0; width:100%;">
+  <tr><td colspan="2" style="background:#e8f0fe; font-weight:bold; padding:8px;">aem-carousel</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><img src="https://main--aem-block-collection--adobe.aem.live/block-collection/media_180455b829a1e29ac2451440ba27ebd9692d285ab.jpg?width=1200&format=jpg&optimize=medium" alt="Sample image"></td><td style="padding:8px; vertical-align:top;"><h2>Slide One</h2><p>One slide description.</p></td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><img src="https://main--aem-block-collection--adobe.aem.live/block-collection/media_10c08bd43d12ec89aea76de7423a6081736b75be1.jpg?width=1200&format=jpg&optimize=medium" alt="Sample image"></td><td style="padding:8px; vertical-align:top;"><h2>Slide Two</h2><p>Two slide description.</p></td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><img src="https://main--aem-block-collection--adobe.aem.live/block-collection/media_18912f31c9fe3034c15c130bd65dce423188165a9.jpg?width=1200&format=jpg&optimize=medium" alt="Sample image"></td><td style="padding:8px; vertical-align:top;"><h2>Slide Three</h2><p>Three slide description.</p></td></tr>
+</table>
+
+<hr style="border-style:dashed">
+</div>
+<div class="doc" id="aem-cards">
+<p class="note">DA doc: <strong>docs/library/blocks/aem-cards</strong> &nbsp;·&nbsp; sheet name: aem-Cards</p>
+<hr style="border-style:dashed">
+<h1>aem-Cards</h1>
+<table border="1" style="border-collapse:collapse; margin:1.5em 0; width:100%;">
+  <tr><td colspan="2" style="background:#e8f0fe; font-weight:bold; padding:8px;">aem-cards</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><img src="https://main--aem-block-collection--adobe.aem.live/block-collection/media_180455b829a1e29ac2451440ba27ebd9692d285ab.jpg?width=750&format=jpg&optimize=medium" alt="Sample image"></td><td style="padding:8px; vertical-align:top;"><h3>Card One</h3><p>Supporting copy for this card.</p></td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><img src="https://main--aem-block-collection--adobe.aem.live/block-collection/media_10c08bd43d12ec89aea76de7423a6081736b75be1.jpg?width=750&format=jpg&optimize=medium" alt="Sample image"></td><td style="padding:8px; vertical-align:top;"><h3>Card Two</h3><p>Supporting copy for this card.</p></td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><img src="https://main--aem-block-collection--adobe.aem.live/block-collection/media_18912f31c9fe3034c15c130bd65dce423188165a9.jpg?width=750&format=jpg&optimize=medium" alt="Sample image"></td><td style="padding:8px; vertical-align:top;"><h3>Card Three</h3><p>Supporting copy for this card.</p></td></tr>
+</table>
+
+<hr style="border-style:dashed">
+</div>
+<div class="doc" id="aem-cards-no-images">
+<p class="note">DA doc: <strong>docs/library/blocks/aem-cards-no-images</strong> &nbsp;·&nbsp; sheet name: aem-Cards No Images</p>
+<hr style="border-style:dashed">
+<h1>aem-Cards No Images</h1>
+<p>Same block, text-only rows.</p><table border="1" style="border-collapse:collapse; margin:1.5em 0; width:100%;">
+  <tr><td colspan="1" style="background:#e8f0fe; font-weight:bold; padding:8px;">aem-cards</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><h3>Free Shipping</h3><p>On orders over $50.</p></td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><h3>Limited Warranty</h3><p>Every product is backed by Cuisinart.</p></td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><h3>Recipes</h3><p>Thousands of ideas for every appliance.</p></td></tr>
+</table>
+
+<hr style="border-style:dashed">
+</div>
+<div class="doc" id="aem-video">
+<p class="note">DA doc: <strong>docs/library/blocks/aem-video</strong> &nbsp;·&nbsp; sheet name: aem-Video</p>
+<hr style="border-style:dashed">
+<h1>aem-Video</h1>
+
+<table border="1" style="border-collapse:collapse; margin:1.5em 0; width:100%;">
+  <tr><td colspan="1" style="background:#e8f0fe; font-weight:bold; padding:8px;">aem-video</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><a href="https://www.youtube.com/watch?v=jNQXAC9IVRw">https://www.youtube.com/watch?v=jNQXAC9IVRw</a></td></tr>
+</table>
+<p>Autoplay variant (muted, loops, respects reduced-motion):</p><table border="1" style="border-collapse:collapse; margin:1.5em 0; width:100%;">
+  <tr><td colspan="1" style="background:#e8f0fe; font-weight:bold; padding:8px;">aem-video (autoplay)</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><a href="https://www.youtube.com/watch?v=jNQXAC9IVRw">https://www.youtube.com/watch?v=jNQXAC9IVRw</a></td></tr>
+</table>
+
+
+<hr style="border-style:dashed">
+</div>
+<div class="doc" id="aem-fragment">
+<p class="note">DA doc: <strong>docs/library/blocks/aem-fragment</strong> &nbsp;·&nbsp; sheet name: aem-Fragment</p>
+<hr style="border-style:dashed">
+<h1>aem-Fragment</h1>
+
+<table border="1" style="border-collapse:collapse; margin:1.5em 0; width:100%;">
+  <tr><td colspan="1" style="background:#e8f0fe; font-weight:bold; padding:8px;">aem-fragment</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><a href="https://main--cuisinart--bwb1066.aem.page/docs/library/blocks/fragment-include">/docs/library/blocks/fragment-include</a></td></tr>
+</table>
+
+
+<hr style="border-style:dashed">
+</div>
+<div class="doc" id="fragment-include">
+<p class="note">DA doc: <strong>docs/library/blocks/fragment-include</strong> &nbsp;·&nbsp; NOT a sheet row. This is the content the aem-fragment sample pulls in. Preview it before you preview aem-fragment.</p>
+<hr style="border-style:dashed">
+<h2>Savor the Good Life</h2>
+<p>This content is a fragment. It's authored once at <code>/docs/library/blocks/fragment-include</code> and reused on every page that references it.</p>
+<table border="1" style="border-collapse:collapse; margin:1.5em 0; width:100%;">
+  <tr><td style="background:#e8f0fe; font-weight:bold; padding:8px;">aem-cards</td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><h3>Coffee</h3><p>Grind-and-brew, single-serve and espresso.</p></td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><h3>Food Prep</h3><p>Food processors, blenders and mixers.</p></td></tr>
+  <tr><td style="padding:8px; vertical-align:top;"><h3>Cookware</h3><p>Stainless, nonstick and cast iron.</p></td></tr>
+</table>
+<hr style="border-style:dashed">
+</div>
+</body></html>
