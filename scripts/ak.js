@@ -203,7 +203,8 @@ export function decorateLink(config, a) {
       if (localized) a.href = localized.href;
     }
     decorateButton(a);
-    if (!dnb) {
+    // aem-video/aem-embed read their own link; don't auto-block it out from under them.
+    if (!dnb && !a.closest('.aem-video, .aem-embed')) {
       const href = a.getAttribute('href');
       const found = config.linkBlocks.some((pattern) => {
         const key = Object.keys(pattern)[0];
