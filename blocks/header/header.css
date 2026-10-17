@@ -219,10 +219,6 @@ header {
 }
 
 @media (width >= 900px) {
-  :root {
-    --header-height: 130px;
-  }
-
   header {
     --header-bar-height: 78px;
 

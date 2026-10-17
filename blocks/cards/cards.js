@@ -26,6 +26,7 @@ function decorateRating(p) {
   if (!m) return false;
   const score = parseFloat(m[1]);
   p.className = 'cards-rating';
+  p.setAttribute('role', 'img');
   p.setAttribute('aria-label', `Rated ${score} out of 5${m[2] ? `, ${m[2].replace(/[()]/g, '').trim()} reviews` : ''}`);
   const stars = document.createElement('span');
   stars.className = 'cards-stars';

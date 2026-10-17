@@ -1,7 +1,12 @@
 /* Work Sans (Google Fonts) + Gelica (Typekit) load from head.html. */
+
+/* Metric-matched fallbacks so the web fonts swap in without layout shift. */
 @font-face {
   font-family: "Work Sans Fallback";
-  size-adjust: 111%;
+  size-adjust: 111.5%;
+  ascent-override: 83%;
+  descent-override: 21.7%;
+  line-gap-override: 0%;
   src: local("Arial");
 }
 
@@ -305,20 +310,35 @@ a {
 .rail-dots {
   display: flex;
   align-items: center;
-  gap: 8px;
 
+  /* 24px hit area (WCAG target size) around a 10px dot. */
   button {
-    width: 10px;
-    height: 10px;
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
     padding: 0;
     border: 0;
-    border-radius: 5px;
-    background: var(--color-sand);
+    background: none;
+    cursor: pointer;
     transition: width 0.2s;
 
+    &::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 5px;
+      background: var(--color-sand);
+      transition: width 0.2s;
+    }
+
     &.is-active {
-      width: 32px;
-      background: var(--color-cuisinart-green);
+      width: 40px;
+
+      &::before {
+        width: 32px;
+        background: var(--color-cuisinart-green);
+      }
     }
   }
 }
@@ -459,6 +479,9 @@ svg {
   }
 
   :root {
+    /* Desktop header (bar + nav row). Set here, not in header.css, so the
+       page reserves the right space before the header block loads. */
+    --header-height: 130px;
     --heading-font-size-xxl: 48px;
     --heading-font-size-xl: 40px;
     --heading-font-size-l: 32px;

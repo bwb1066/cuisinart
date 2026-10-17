@@ -137,7 +137,10 @@ function buildSearch() {
   const form = document.createElement('form');
   form.className = 'header-search';
   form.setAttribute('role', 'search');
-  form.innerHTML = '<label><span class="a11y">Search</span><input type="search" name="q" placeholder="Search or ask Hollis" autocomplete="off"></label>';
+  // WebMCP: lets AI agents call the search form as a tool.
+  form.setAttribute('toolname', 'search_or_ask');
+  form.setAttribute('tooldescription', 'Search Cuisinart products or ask Hollis, the Cuisinart concierge, a question. Opens the concierge with the answer.');
+  form.innerHTML = '<label><span class="a11y">Search</span><input type="search" name="q" placeholder="Search or ask Hollis" autocomplete="off" toolparamdescription="A product search or a question, e.g. best coffee maker for a small kitchen"></label>';
   form.querySelector('label').prepend(icon('search'));
   form.addEventListener('submit', (e) => {
     e.preventDefault();
